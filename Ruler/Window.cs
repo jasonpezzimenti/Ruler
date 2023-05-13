@@ -188,5 +188,22 @@ namespace Ruler
 
             ruler.Dock = DockStyle.Fill;
         }
+
+        private void menuItem9_Click(object sender, EventArgs e)
+        {
+            if (((MenuItem)sender).Checked)
+            {
+                this.TopMost = false;
+
+                ((MenuItem)sender).Checked = false;
+            }
+            else
+            {
+                this.BringToFront();
+                this.TopMost = true;
+
+                ((MenuItem)sender).Checked = true;
+            }
+        }
     }
 }
