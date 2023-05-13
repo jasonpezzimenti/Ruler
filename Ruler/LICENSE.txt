@@ -1,0 +1,9 @@
+﻿Drag and Drop:
+Author: Ghorban ali arabi
+URL: https://stackoverflow.com/a/75425735
+Date: 13/05/2023
+
+Resizing:
+Author: seyyed hamed monem
+URL: https://www.codeproject.com/Tips/709121/Move-and-Resize-Controls-on-a-Form-at-Runtime-With
+Date: 13/05/2023
