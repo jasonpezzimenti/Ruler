@@ -514,7 +514,14 @@ namespace Ruler
 
         private void Ruler_MouseMove(object sender, MouseEventArgs e)
         {
-            length = e.Location.X.ToString();
+            if (this.Direction == Directions.Horizontal)
+            {
+                length = e.Location.X.ToString();
+            }
+            else
+            {
+                length = e.Location.Y.ToString();
+            }
 
             lengthTextSize = this.CreateGraphics().MeasureString(
                 length,

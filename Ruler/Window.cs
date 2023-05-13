@@ -16,9 +16,11 @@ namespace Ruler
         private Point lastMouseLocation;
         private Point firstMouseLocation;
         private int initialWidth;
+        private int initialHeight;
         private Point currentMouseLocation;
         private bool moving;
         private bool isResizing;
+        private Size initialSize;
 
         public Window()
         {
@@ -50,42 +52,87 @@ namespace Ruler
         {
             pressing = true;
             firstMouseLocation = e.Location;
-            initialWidth = Width;
+            initialWidth = this.Width;
+            initialHeight = this.Height;
         }
 
         private void ruler_MouseMove(object sender, MouseEventArgs e)
         {
-            int location = e.Location.X;
+            int location = -1;
 
-            ruler.DrawIndicator(location);
-
-            if (e.X >= this.Width || e.X >= (this.Width - 3))
+            if (ruler.Direction == Ruler.Directions.Horizontal)
             {
-                isResizing = true;
-
-                this.Cursor = Cursors.SizeWE;
+                location = e.Location.X;
             }
             else
             {
-                this.Cursor = Cursors.Default;
+                location = e.Location.Y;
             }
 
-            if (pressing)
+            ruler.DrawIndicator(location);
+
+            if (ruler.Direction == Ruler.Directions.Horizontal)
             {
-                ruler.IsDragging = true;
-
-                currentMouseLocation = e.Location;
-
-                if (!isResizing)
+                if (e.X >= this.Width || e.X >= (this.Width - 3))
                 {
-                    this.Left = this.Left += currentMouseLocation.X - firstMouseLocation.X;
-                    this.Top = this.Top += currentMouseLocation.Y - firstMouseLocation.Y;
+                    isResizing = true;
 
-                    moving = true;
+                    this.Cursor = Cursors.SizeWE;
                 }
                 else
                 {
-                    this.Width = (e.X - firstMouseLocation.X) + initialWidth;
+                    this.Cursor = Cursors.Default;
+                }
+
+                if (pressing)
+                {
+                    ruler.IsDragging = true;
+
+                    currentMouseLocation = e.Location;
+
+                    if (!isResizing)
+                    {
+                        this.Left = this.Left += currentMouseLocation.X - firstMouseLocation.X;
+                        this.Top = this.Top += currentMouseLocation.Y - firstMouseLocation.Y;
+
+                        moving = true;
+                    }
+                    else
+                    {
+                        this.Width = (e.X - firstMouseLocation.X) + initialWidth;
+                    }
+                }
+            }
+            else
+            {
+                if (e.Y >= this.Height || e.Y >= (this.Height - 3))
+                {
+                    isResizing = true;
+
+                    this.Cursor = Cursors.SizeNS;
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                }
+
+                if (pressing)
+                {
+                    ruler.IsDragging = true;
+
+                    currentMouseLocation = e.Location;
+
+                    if (!isResizing)
+                    {
+                        this.Left = this.Left += currentMouseLocation.X - firstMouseLocation.X;
+                        this.Top = this.Top += currentMouseLocation.Y - firstMouseLocation.Y;
+
+                        moving = true;
+                    }
+                    else
+                    {
+                        this.Height = (e.Y - firstMouseLocation.Y) + initialHeight;
+                    }
                 }
             }
         }
@@ -116,6 +163,30 @@ namespace Ruler
         private void menuItem4_Click(object sender, EventArgs e)
         {
             this.Dispose(true);
+        }
+
+        private void menuItem6_Click(object sender, EventArgs e)
+        {
+            ruler.Direction = Ruler.Directions.Horizontal;
+            this.Size = initialSize;
+
+            ruler.Dock = DockStyle.Fill;
+        }
+
+        private void Window_Shown(object sender, EventArgs e)
+        {
+            initialSize = Size;
+        }
+
+        private void menuItem7_Click(object sender, EventArgs e)
+        {
+            ruler.Direction = Ruler.Directions.Vertical;
+            this.Size = new Size(
+                initialSize.Height,
+                700
+                );
+
+            ruler.Dock = DockStyle.Fill;
         }
     }
 }
