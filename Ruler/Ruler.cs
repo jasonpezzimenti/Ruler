@@ -73,6 +73,18 @@ namespace Ruler
 
         public Markers Marker { get; set; }
 
+        public void DrawMarker(int xMarkerLocation, int yMarkerLocation)
+        {
+            markers.Add(
+                new int[]
+                {
+                    xMarkerLocation,
+                    yMarkerLocation
+                });
+
+            this.Refresh();
+        }
+
         public void ClearMarker(Markers marker)
         {
             switch(marker)

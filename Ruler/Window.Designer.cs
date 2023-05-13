@@ -40,9 +40,9 @@
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // separator1
@@ -155,12 +155,6 @@
             this.menuItem8.Index = 2;
             this.menuItem8.Text = "-";
             // 
-            // menuItem4
-            // 
-            this.menuItem4.Index = 5;
-            this.menuItem4.Text = "Exit";
-            this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
-            // 
             // menuItem9
             // 
             this.menuItem9.Index = 3;
@@ -171,6 +165,12 @@
             // 
             this.menuItem10.Index = 4;
             this.menuItem10.Text = "-";
+            // 
+            // menuItem4
+            // 
+            this.menuItem4.Index = 5;
+            this.menuItem4.Text = "Exit";
+            this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
             // 
             // Window
             // 
@@ -186,6 +186,7 @@
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ruler";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Shown += new System.EventHandler(this.Window_Shown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Window_MouseMove);
             this.ResumeLayout(false);

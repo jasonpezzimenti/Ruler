@@ -12,6 +12,10 @@ namespace Ruler
 {
     public partial class Window : Form
     {
+        private List<KeyValuePair<int, int>> markers = new List<KeyValuePair<int, int>>();
+
+        private AppSettings settings = new AppSettings();
+
         private bool pressing;
         private Point lastMouseLocation;
         private Point firstMouseLocation;
@@ -144,6 +148,13 @@ namespace Ruler
 
             ruler.IsDragging = false;
             isResizing = false;
+
+            markers.Add(
+                new KeyValuePair<int, int>(
+                    e.Location.X,
+                    e.Location.Y
+                    )
+                );
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -162,7 +173,7 @@ namespace Ruler
 
         private void menuItem4_Click(object sender, EventArgs e)
         {
-            this.Dispose(true);
+            this.Close();
         }
 
         private void menuItem6_Click(object sender, EventArgs e)
@@ -176,6 +187,60 @@ namespace Ruler
         private void Window_Shown(object sender, EventArgs e)
         {
             initialSize = Size;
+
+            // Load settings.
+            settings = AppSettings.Load();
+
+            RestoreState();
+        }
+
+        private void RestoreState()
+        {
+            if (settings != null)
+            {
+                //if (settings.Markers.Count >= 1)
+                //{
+                //    markers = settings.Markers;
+
+                //    foreach (var item in markers)
+                //    {
+                //        ruler.DrawMarker(
+                //            item.Key,
+                //            item.Value
+                //            );
+                //    }
+                //}
+
+                int width = this.Size.Width;
+
+                if (settings.Size.Width >= width)
+                {
+                    this.Size = settings.Size;
+                }
+
+                if (settings.Location == Point.Empty)
+                {
+                    this.StartPosition = FormStartPosition.CenterScreen;
+                }
+                else
+                {
+                    this.Location = settings.Location;
+                }
+
+                if (settings.TopMost)
+                {
+                    this.BringToFront();
+                    this.TopMost = true;
+
+                    menuItem9.Checked = true;
+                }
+                else
+                {
+                    this.TopMost = false;
+
+                    menuItem9.Checked = false;
+                }
+            }
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -203,6 +268,29 @@ namespace Ruler
                 this.TopMost = true;
 
                 ((MenuItem)sender).Checked = true;
+            }
+        }
+
+        private void Window_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+
+            settings.Size = this.Size;
+            settings.Location = this.Location;
+            settings.TopMost = this.TopMost;
+
+            //settings.Markers = markers;
+
+            AppSettings.Save(settings);
+
+            e.Cancel = false;
+        }
+
+        private void SaveState()
+        {
+            if (settings != null)
+            {
+                AppSettings.Save(settings);
             }
         }
     }
