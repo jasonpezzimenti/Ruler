@@ -49,7 +49,7 @@ namespace Ruler
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
-            if(this.BackColor == Color.Transparent)
+            if (this.BackColor == Color.Transparent)
             {
                 this.BackColor = this.Parent.BackColor;
             }
@@ -59,7 +59,7 @@ namespace Ruler
 
         public void IndicatorLocationChanged(object sender, EventArgs e)
         {
-            if(OnIndicatorLocationChanged != null)
+            if (OnIndicatorLocationChanged != null)
             {
                 OnIndicatorLocationChanged(indicatorLocation, EventArgs.Empty);
             }
@@ -87,20 +87,17 @@ namespace Ruler
 
         public void ClearMarker(Markers marker)
         {
-            switch(marker)
+            if (markers.Count >= 1)
             {
-                case Markers.All:
-                    if(markers.Count >= 1)
-                    {
+                switch (marker)
+                {
+                    case Markers.All:
                         markers.Clear();
-                    }
-                    break;
-                case Markers.Current:
-                    if(markers.Count >= 1)
-                    {
+                        break;
+                    case Markers.Current:
                         markers.Remove(markers[markers.Count - 1]);
-                    }
-                    break;
+                        break;
+                }
             }
 
             this.Refresh();
@@ -463,7 +460,7 @@ namespace Ruler
                 }
             }
 
-            if(isDrawingLength)
+            if (isDrawingLength)
             {
                 e.Graphics.DrawString(
                     length,
