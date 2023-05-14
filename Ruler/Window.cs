@@ -12,7 +12,7 @@ namespace Ruler
 {
     public partial class Window : Form
     {
-        private List<KeyValuePair<int, int>> markers = new List<KeyValuePair<int, int>>();
+        private List<Marker> markers = new List<Marker>();
 
         private AppSettings settings = new AppSettings();
 
@@ -149,11 +149,12 @@ namespace Ruler
             ruler.IsDragging = false;
             isResizing = false;
 
+            Marker marker = new Marker();
+            marker.X = e.Location.X;
+            marker.Y = e.Location.Y;
+
             markers.Add(
-                new KeyValuePair<int, int>(
-                    e.Location.X,
-                    e.Location.Y
-                    )
+                marker
                 );
         }
 
@@ -198,18 +199,20 @@ namespace Ruler
         {
             if (settings != null)
             {
-                //if (settings.Markers.Count >= 1)
-                //{
-                //    markers = settings.Markers;
+                if(settings.Markers.Count >= 1)
+                {
+                    markers = settings.Markers;
 
-                //    foreach (var item in markers)
-                //    {
-                //        ruler.DrawMarker(
-                //            item.Key,
-                //            item.Value
-                //            );
-                //    }
-                //}
+                    foreach(Marker marker in markers)
+                    {
+                        ruler.DrawMarker(
+                            marker.X,
+                            marker.Y
+                            );
+
+                        this.Refresh();
+                    }
+                }
 
                 int width = this.Size.Width;
 
@@ -279,7 +282,7 @@ namespace Ruler
             settings.Location = this.Location;
             settings.TopMost = this.TopMost;
 
-            //settings.Markers = markers;
+            settings.Markers = markers;
 
             AppSettings.Save(settings);
 

@@ -13,9 +13,7 @@ namespace Ruler
 {
     public class AppSettings
     {
-        // Commented-out until I can get this working.
-        //[JsonInclude]
-        //public List<KeyValuePair<int, int>> Markers = new List<KeyValuePair<int, int>>();
+        public List<Marker> Markers = new List<Marker>();
         public Size Size { get; set; }
         public Point Location { get; set; }
 
