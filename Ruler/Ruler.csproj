@@ -26,7 +26,7 @@
     <ProductName>Ruler</ProductName>
     <PublisherName>JASON PEZZIMENTI</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -114,7 +114,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="Authors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authors.Designer.cs">
+      <DependentUpon>Authors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Marker.cs" />
     <Compile Include="Ruler.cs">
       <SubType>Component</SubType>
@@ -130,6 +142,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Authors.resx">
+      <DependentUpon>Authors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ruler.resx">
       <DependentUpon>Ruler.cs</DependentUpon>
     </EmbeddedResource>

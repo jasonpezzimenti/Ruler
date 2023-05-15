@@ -309,5 +309,16 @@ namespace Ruler
                 AppSettings.Save(settings);
             }
         }
+
+        private void menuItem12_Click(object sender, EventArgs e)
+        {
+            using (About window = new About())
+            {
+                if(window.ShowDialog(this) == DialogResult.OK)
+                {
+
+                }
+            }
+        }
     }
 }

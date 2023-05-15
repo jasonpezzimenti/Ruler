@@ -43,6 +43,8 @@
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem11 = new System.Windows.Forms.MenuItem();
+            this.menuItem12 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // separator1
@@ -109,6 +111,8 @@
             this.menuItem8,
             this.menuItem9,
             this.menuItem10,
+            this.menuItem12,
+            this.menuItem11,
             this.menuItem4});
             // 
             // menuItem1
@@ -169,9 +173,20 @@
             // 
             // menuItem4
             // 
-            this.menuItem4.Index = 5;
+            this.menuItem4.Index = 7;
             this.menuItem4.Text = "Exit";
             this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+            // 
+            // menuItem11
+            // 
+            this.menuItem11.Index = 6;
+            this.menuItem11.Text = "-";
+            // 
+            // menuItem12
+            // 
+            this.menuItem12.Index = 5;
+            this.menuItem12.Text = "About...";
+            this.menuItem12.Click += new System.EventHandler(this.menuItem12_Click);
             // 
             // Window
             // 
@@ -211,6 +226,8 @@
         private System.Windows.Forms.MenuItem menuItem8;
         private System.Windows.Forms.MenuItem menuItem9;
         private System.Windows.Forms.MenuItem menuItem10;
+        private System.Windows.Forms.MenuItem menuItem12;
+        private System.Windows.Forms.MenuItem menuItem11;
     }
 }
 
