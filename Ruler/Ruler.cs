@@ -30,7 +30,7 @@ namespace Ruler
         [Browsable(false)]
         public bool RequestDrawing { get; set; }
 
-        private List<int[]> markers = new List<int[]>();
+        private List<Marker> markers = new List<Marker>();
 
         private Point[] smallLinePoints;
         private Point[] largeLinePoints;
@@ -78,12 +78,13 @@ namespace Ruler
 
         public void DrawMarker(int xMarkerLocation, int yMarkerLocation)
         {
-            markers.Add(
-                new int[]
-                {
-                    xMarkerLocation,
-                    yMarkerLocation
-                });
+            Marker marker = new Marker();
+            marker.X = xMarkerLocation;
+            marker.Y = yMarkerLocation;
+
+            markers.Add(marker);
+
+            marker = null;
 
             this.Refresh();
         }
@@ -414,7 +415,7 @@ namespace Ruler
                 {
                     if (Direction == Directions.Horizontal)
                     {
-                        foreach (int[] markerLocation in markers)
+                        foreach (Marker marker in markers)
                         {
                             e.Graphics.DrawLine(
                                 new Pen(
@@ -426,11 +427,11 @@ namespace Ruler
                                     1.0f
                                     ),
                                 new Point(
-                                    markerLocation[0],
+                                    marker.X,
                                     0
                                     ),
                                 new Point(
-                                    markerLocation[0],
+                                    marker.X,
                                     this.Height
                                     )
                                 );
@@ -438,7 +439,7 @@ namespace Ruler
                     }
                     else
                     {
-                        foreach (int[] markerLocation in markers)
+                        foreach (Marker marker in markers)
                         {
                             e.Graphics.DrawLine(
                                 new Pen(
@@ -451,11 +452,11 @@ namespace Ruler
                                     ),
                                 new Point(
                                     0,
-                                    markerLocation[1]
+                                    marker.Y
                                     ),
                                 new Point(
                                     this.Width,
-                                    markerLocation[1]
+                                    marker.Y
                                     )
                                 );
                         }
@@ -492,12 +493,13 @@ namespace Ruler
                     xMarkerLocation = e.Location.X;
                     yMarkerLocation = e.Location.Y;
 
-                    markers.Add(
-                        new int[]
-                        {
-                    xMarkerLocation,
-                    yMarkerLocation
-                        });
+                    Marker marker = new Marker();
+                    marker.X = xMarkerLocation;
+                    marker.Y = yMarkerLocation;
+
+                    markers.Add(marker);
+
+                    marker = null;
                 }
 
                 isDrawingMarker = true;
