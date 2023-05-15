@@ -96,14 +96,16 @@ namespace Ruler
 
                     if (!isResizing)
                     {
-                        this.Left = this.Left += currentMouseLocation.X - firstMouseLocation.X;
-                        this.Top = this.Top += currentMouseLocation.Y - firstMouseLocation.Y;
+                        this.Location = new Point(
+                            this.Location.X + (currentMouseLocation.X - firstMouseLocation.X),
+                            this.Location.Y + (currentMouseLocation.Y - firstMouseLocation.Y)
+                            );
 
                         moving = true;
                     }
                     else
                     {
-                        this.Width = (e.X - firstMouseLocation.X) + initialWidth;
+                        this.Width = initialWidth + (currentMouseLocation.X - firstMouseLocation.X);
                     }
                 }
             }
@@ -128,8 +130,10 @@ namespace Ruler
 
                     if (!isResizing)
                     {
-                        this.Left = this.Left += currentMouseLocation.X - firstMouseLocation.X;
-                        this.Top = this.Top += currentMouseLocation.Y - firstMouseLocation.Y;
+                        this.Location = new Point(
+                            this.Location.X + (currentMouseLocation.X - firstMouseLocation.X),
+                            this.Location.Y + (currentMouseLocation.Y - firstMouseLocation.Y)
+                            );
 
                         moving = true;
                     }
@@ -149,13 +153,18 @@ namespace Ruler
             ruler.IsDragging = false;
             isResizing = false;
 
-            Marker marker = new Marker();
-            marker.X = e.Location.X;
-            marker.Y = e.Location.Y;
+            if (e.Button == MouseButtons.Left)
+            {
+                Marker marker = new Marker();
+                marker.X = e.Location.X;
+                marker.Y = e.Location.Y;
 
-            markers.Add(
-                marker
+                markers.Add(
+                    marker
                 );
+
+                this.Refresh();
+            }
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -165,11 +174,15 @@ namespace Ruler
         private void menuItem2_Click(object sender, EventArgs e)
         {
             ruler.ClearMarker(Ruler.Markers.All);
+
+            markers.Clear();
         }
 
         private void menuItem3_Click(object sender, EventArgs e)
         {
             ruler.ClearMarker(Ruler.Markers.Current);
+
+            markers.Remove(markers[markers.Count - 1]);
         }
 
         private void menuItem4_Click(object sender, EventArgs e)
@@ -199,18 +212,18 @@ namespace Ruler
         {
             if (settings != null)
             {
-                if(settings.Markers.Count >= 1)
+                if (settings.Markers.Count >= 1)
                 {
                     markers = settings.Markers;
 
-                    foreach(Marker marker in markers)
+                    ruler.RequestDrawing = true;
+
+                    foreach (Marker marker in markers)
                     {
                         ruler.DrawMarker(
                             marker.X,
                             marker.Y
                             );
-
-                        this.Refresh();
                     }
                 }
 

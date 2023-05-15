@@ -27,6 +27,9 @@ namespace Ruler
         [Browsable(false)]
         public bool IsDragging { get; set; }
 
+        [Browsable(false)]
+        public bool RequestDrawing { get; set; }
+
         private List<int[]> markers = new List<int[]>();
 
         private Point[] smallLinePoints;
@@ -164,16 +167,16 @@ namespace Ruler
                         SizeF textSize = e.Graphics.MeasureString(
                             number,
                             new Font(
-                                "Saira",
-                                5
+                                this.Font.FontFamily,
+                                this.Font.Size
                                 )
                             );
 
                         e.Graphics.DrawString(
                             number,
                             new Font(
-                                "Saira",
-                                5.25f
+                                this.Font.FontFamily,
+                                this.Font.Size
                                 ),
                             new SolidBrush(
                                 Color.FromArgb(
@@ -304,16 +307,16 @@ namespace Ruler
                         SizeF textSize = e.Graphics.MeasureString(
                             number,
                             new Font(
-                                "Saira",
-                                5
+                                this.Font.FontFamily,
+                                this.Font.Size
                                 )
                             );
 
                         e.Graphics.DrawString(
                             number,
                             new Font(
-                                "Saira",
-                                5.25f
+                                this.Font.FontFamily,
+                                this.Font.Size
                                 ),
                             new SolidBrush(
                                 Color.FromArgb(
@@ -321,9 +324,38 @@ namespace Ruler
                                 )
                                 ),
                             10,
-                            ((index / 2) - (textSize.Height / 2)),
+                            ((index) - (textSize.Height / 2)),
                             format
                             );
+                    }
+                    else if (index % 2 == 0)
+                    {
+                        smallLinePoints = new Point[]
+                        {
+                                new Point(
+                                    0,
+                                    index
+                                    ),
+                                new Point(
+                                    5,
+                                    index
+                                    )
+                            };
+
+                        using (Pen pen = new Pen(
+                            Color.FromArgb(
+                                246, 209, 150
+                                ),
+                            1.0f
+                            )
+                        )
+                        {
+                            e.Graphics.DrawLine(
+                                pen,
+                                smallLinePoints[0],
+                                smallLinePoints[1]
+                                );
+                        }
                     }
                     else
                     {
@@ -346,35 +378,6 @@ namespace Ruler
                                 1.0f
                                 )
                                 )
-                            {
-                                e.Graphics.DrawLine(
-                                    pen,
-                                    smallLinePoints[0],
-                                    smallLinePoints[1]
-                                    );
-                            }
-                        }
-                        else if (index % 2 == 0)
-                        {
-                            smallLinePoints = new Point[]
-                            {
-                                new Point(
-                                    0,
-                                    index
-                                    ),
-                                new Point(
-                                    5,
-                                    index
-                                    )
-                                };
-
-                            using (Pen pen = new Pen(
-                                Color.FromArgb(
-                                    246, 209, 150
-                                    ),
-                                1.0f
-                                )
-                            )
                             {
                                 e.Graphics.DrawLine(
                                     pen,
@@ -407,7 +410,7 @@ namespace Ruler
 
             if (!IsDragging)
             {
-                if (isDrawingMarker)
+                if (isDrawingMarker || RequestDrawing)
                 {
                     if (Direction == Directions.Horizontal)
                     {
@@ -476,7 +479,7 @@ namespace Ruler
 
         private void Ruler_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Right)
+            if (e.Button != MouseButtons.Right && e.Button != MouseButtons.Middle)
             {
                 if (OnIndicatorLocationChanged != null)
                 {
@@ -499,17 +502,20 @@ namespace Ruler
 
                 isDrawingMarker = true;
 
-                this.Refresh();
-            }
-            else
-            {
-                this.Refresh();
+            this.Refresh();
             }
         }
 
         private void Ruler_SizeChanged(object sender, EventArgs e)
         {
-            length = this.Width.ToString();
+            if (Direction == Directions.Horizontal)
+            {
+                length = this.Width.ToString();
+            }
+            else
+            {
+                length = this.Height.ToString();
+            }
 
             lengthTextSize = this.CreateGraphics().MeasureString(
                 length,

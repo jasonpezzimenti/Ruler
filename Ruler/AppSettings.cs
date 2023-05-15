@@ -40,6 +40,11 @@ namespace Ruler
                     options
                     );
 
+                if(File.Exists(Program.appDataPath + @"\settings.json"))
+                {
+                    File.Delete(Program.appDataPath + @"\settings.json");
+                }
+
                 File.WriteAllText(
                     Program.appDataPath + @"\settings.json",
                     data

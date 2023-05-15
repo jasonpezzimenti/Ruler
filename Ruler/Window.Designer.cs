@@ -88,11 +88,12 @@
             // 
             this.ruler.Direction = Ruler.Directions.Horizontal;
             this.ruler.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ruler.Font = new System.Drawing.Font("Saira", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ruler.Font = new System.Drawing.Font("Saira", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ruler.IsDragging = false;
             this.ruler.Location = new System.Drawing.Point(1, 0);
             this.ruler.Marker = Ruler.Markers.All;
             this.ruler.Name = "ruler";
+            this.ruler.RequestDrawing = false;
             this.ruler.Size = new System.Drawing.Size(798, 26);
             this.ruler.TabIndex = 3;
             this.ruler.Text = "ruler1";
