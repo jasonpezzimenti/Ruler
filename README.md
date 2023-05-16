@@ -2,4 +2,4 @@
 A simple Ruler for Windows.
 -
 
-<a href="ruler-screenshot.jpg" alt="A screenshot of Ruler." />
+![Ruler Screenshot](https://www.github.com/jasonpezzimenti/Ruler/ruler-screenshot.jpg)
